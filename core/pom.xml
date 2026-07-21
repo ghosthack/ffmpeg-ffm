@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.ghosthack</groupId>
+    <artifactId>ffmpeg-ffm-parent</artifactId>
+    <version>8.1.2-0.1.0</version>
+  </parent>
+
+  <artifactId>ffmpeg-ffm</artifactId>
+  <packaging>jar</packaging>
+
+  <name>ffmpeg-ffm</name>
+  <description>jextract-generated FFM bindings for FFmpeg 8.1.2 with a runtime native-library loader</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.ghosthack</groupId>
+      <artifactId>ffmpeg-ffm-natives</artifactId>
+      <version>${project.version}</version>
+      <classifier>${native.classifier}</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.11.4</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- Filter version.properties so Version.VERSION always matches the pom. -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+        <configuration>
+          <argLine>--enable-native-access=ALL-UNNAMED</argLine>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,6 @@
+target/
+tools/
+build/
+.DS_Store
+*.log
+natives/src/main/resources/natives/

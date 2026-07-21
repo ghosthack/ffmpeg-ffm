@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.github.ghosthack</groupId>
+  <artifactId>ffmpeg-ffm-parent</artifactId>
+  <version>8.1.2-0.1.0</version>
+  <packaging>pom</packaging>
+
+  <name>ffmpeg-ffm parent</name>
+  <description>Panama FFM (jextract) bindings for FFmpeg with bundled LGPL natives</description>
+  <url>https://github.com/ghosthack/ffmpeg-ffm</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>ghosthack</id>
+      <name>ghosthack</name>
+      <url>https://github.com/ghosthack</url>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/ghosthack/ffmpeg-ffm.git</connection>
+    <developerConnection>scm:git:git@github.com:ghosthack/ffmpeg-ffm.git</developerConnection>
+    <url>https://github.com/ghosthack/ffmpeg-ffm</url>
+    <tag>v8.1.2-0.1.0</tag>
+  </scm>
+
+  <modules>
+    <module>natives</module>
+    <module>core</module>
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>22</maven.compiler.release>
+    <ffmpeg.version>8.1.2</ffmpeg.version>
+    <!-- Default for platform-less builds (the CI deploy runner is linux);
+         the OS-activated profiles below override it on real dev machines. -->
+    <native.classifier>macos-arm64</native.classifier>
+  </properties>
+
+  <profiles>
+    <!-- Maven Central publishing: mvn -Prelease deploy (see PUBLISHING.md for
+         the one-time account/gpg/token setup). Kept out of the default build
+         so plain install stays fast and needs no gpg key. -->
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals><goal>jar-no-fork</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.11.2</version>
+            <configuration>
+              <!-- The jextract-generated stubs are not written for doclint. -->
+              <doclint>none</doclint>
+              <quiet>true</quiet>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals><goal>jar</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.7</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals><goal>sign</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.7.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <!-- Same push-to-publish flow proven by imageio-native. -->
+              <autoPublish>true</autoPublish>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>macos-arm64</id>
+      <activation>
+        <os><family>mac</family><arch>aarch64</arch></os>
+      </activation>
+      <properties>
+        <native.classifier>macos-arm64</native.classifier>
+      </properties>
+    </profile>
+    <profile>
+      <id>windows-x64</id>
+      <activation>
+        <os><family>windows</family><arch>amd64</arch></os>
+      </activation>
+      <properties>
+        <native.classifier>windows-x64</native.classifier>
+      </properties>
+    </profile>
+  </profiles>
+</project>
