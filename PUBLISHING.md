@@ -32,6 +32,21 @@ kept (GitHub cannot display existing secrets; regenerate if lost):
 The `io.github.ghosthack` namespace is already verified on the portal (it
 published imageio-native), so no namespace setup is needed.
 
+## Deploy troubleshooting (lessons from 2026-07-22)
+
+- **"Deployment ... failed while publishing" right after rotating the signing
+  key**: Central validates signatures against public keyservers, and a freshly
+  `--send-keys`'d key takes ~1–15 min to become fetchable. Wait until
+  `https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x<KEYID>` returns the
+  key, then redeploy. Publishing to `keys.openpgp.org` as well is a cheap hedge
+  (it serves key material by ID without email verification).
+- **`gh run rerun --failed` dies in `download-artifact` with a 404** ("workflow
+  run not found"): cross-attempt artifact access is flaky. Don't fight it —
+  dispatch a fresh run instead: `gh workflow run ci.yml`.
+- **Artifact not downloadable right after a green deploy**: repo1.maven.org
+  lags `autoPublish` by ~10–15 min. Poll the pom URL before declaring victory
+  (or before pointing downstream builds at the new version).
+
 ## Local fallback
 
 `mvn -Prelease -Dgpg.skip=true clean verify` dry-runs the build side (sources,
