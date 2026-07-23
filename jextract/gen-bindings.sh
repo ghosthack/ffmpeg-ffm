@@ -60,6 +60,11 @@ rm -rf "$GEN_DIR"
   --include-function av_get_pix_fmt_name \
   --include-function av_dict_get \
   --include-function av_dict_count \
+  --include-function av_buffer_ref \
+  --include-function av_buffer_unref \
+  --include-function av_hwdevice_ctx_create \
+  --include-function av_hwframe_transfer_data \
+  --include-function avcodec_get_hw_config \
   --include-function sws_getContext \
   --include-function sws_scale \
   --include-function sws_freeContext \
@@ -76,10 +81,15 @@ rm -rf "$GEN_DIR"
   --include-struct AVProbeData \
   --include-struct AVDictionaryEntry \
   --include-struct AVChannelLayout \
+  --include-struct AVStreamGroup \
+  --include-struct AVStreamGroupTileGrid \
+  --include-struct AVCodecHWConfig \
   --include-typedef AVMediaType \
   --include-typedef AVPixelFormat \
   --include-typedef AVCodecID \
   --include-typedef AVChannelOrder \
+  --include-typedef AVHWDeviceType \
+  --include-typedef AVStreamGroupParamsType \
   --include-constant AVMEDIA_TYPE_UNKNOWN \
   --include-constant AVMEDIA_TYPE_VIDEO \
   --include-constant AVMEDIA_TYPE_AUDIO \
@@ -94,6 +104,11 @@ rm -rf "$GEN_DIR"
   --include-constant AV_LOG_ERROR \
   --include-constant AV_LOG_QUIET \
   --include-constant AV_DICT_IGNORE_SUFFIX \
+  --include-constant AV_STREAM_GROUP_PARAMS_TILE_GRID \
+  --include-constant AV_HWDEVICE_TYPE_VIDEOTOOLBOX \
+  --include-constant AV_HWDEVICE_TYPE_D3D11VA \
+  --include-constant AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX \
+  --include-constant AV_PIX_FMT_NONE \
   "$ROOT/jextract/ffmpeg_api.h"
 
 # Replace the baked absolute-path lookup chain with the runtime loader.

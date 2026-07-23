@@ -247,6 +247,15 @@ public class FFmpeg {
            throw new AssertionError("should not reach here", ex$);
         }
     }
+    private static final int AV_PIX_FMT_NONE = (int)-1L;
+    /**
+     * {@snippet lang=c :
+     * enum AVPixelFormat.AV_PIX_FMT_NONE = -1
+     * }
+     */
+    public static int AV_PIX_FMT_NONE() {
+        return AV_PIX_FMT_NONE;
+    }
     private static final int AV_PIX_FMT_BGRA = (int)28L;
     /**
      * {@snippet lang=c :
@@ -310,6 +319,121 @@ public class FFmpeg {
                 traceDowncall("avcodec_get_name", id);
             }
             return (MemorySegment)mh$.invokeExact(id);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class av_buffer_ref {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_buffer_ref");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * AVBufferRef *av_buffer_ref(const AVBufferRef *buf)
+     * }
+     */
+    public static FunctionDescriptor av_buffer_ref$descriptor() {
+        return av_buffer_ref.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * AVBufferRef *av_buffer_ref(const AVBufferRef *buf)
+     * }
+     */
+    public static MethodHandle av_buffer_ref$handle() {
+        return av_buffer_ref.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * AVBufferRef *av_buffer_ref(const AVBufferRef *buf)
+     * }
+     */
+    public static MemorySegment av_buffer_ref$address() {
+        return av_buffer_ref.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * AVBufferRef *av_buffer_ref(const AVBufferRef *buf)
+     * }
+     */
+    public static MemorySegment av_buffer_ref(MemorySegment buf) {
+        var mh$ = av_buffer_ref.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_buffer_ref", buf);
+            }
+            return (MemorySegment)mh$.invokeExact(buf);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class av_buffer_unref {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            FFmpeg.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_buffer_unref");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void av_buffer_unref(AVBufferRef **buf)
+     * }
+     */
+    public static FunctionDescriptor av_buffer_unref$descriptor() {
+        return av_buffer_unref.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void av_buffer_unref(AVBufferRef **buf)
+     * }
+     */
+    public static MethodHandle av_buffer_unref$handle() {
+        return av_buffer_unref.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void av_buffer_unref(AVBufferRef **buf)
+     * }
+     */
+    public static MemorySegment av_buffer_unref$address() {
+        return av_buffer_unref.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * void av_buffer_unref(AVBufferRef **buf)
+     * }
+     */
+    public static void av_buffer_unref(MemorySegment buf) {
+        var mh$ = av_buffer_unref.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_buffer_unref", buf);
+            }
+            mh$.invokeExact(buf);
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -773,6 +897,146 @@ public class FFmpeg {
            throw new AssertionError("should not reach here", ex$);
         }
     }
+    private static final int AV_HWDEVICE_TYPE_VIDEOTOOLBOX = (int)6L;
+    /**
+     * {@snippet lang=c :
+     * enum AVHWDeviceType.AV_HWDEVICE_TYPE_VIDEOTOOLBOX = 6
+     * }
+     */
+    public static int AV_HWDEVICE_TYPE_VIDEOTOOLBOX() {
+        return AV_HWDEVICE_TYPE_VIDEOTOOLBOX;
+    }
+    private static final int AV_HWDEVICE_TYPE_D3D11VA = (int)7L;
+    /**
+     * {@snippet lang=c :
+     * enum AVHWDeviceType.AV_HWDEVICE_TYPE_D3D11VA = 7
+     * }
+     */
+    public static int AV_HWDEVICE_TYPE_D3D11VA() {
+        return AV_HWDEVICE_TYPE_D3D11VA;
+    }
+
+    private static class av_hwdevice_ctx_create {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_hwdevice_ctx_create");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type, const char *device, AVDictionary *opts, int flags)
+     * }
+     */
+    public static FunctionDescriptor av_hwdevice_ctx_create$descriptor() {
+        return av_hwdevice_ctx_create.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type, const char *device, AVDictionary *opts, int flags)
+     * }
+     */
+    public static MethodHandle av_hwdevice_ctx_create$handle() {
+        return av_hwdevice_ctx_create.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type, const char *device, AVDictionary *opts, int flags)
+     * }
+     */
+    public static MemorySegment av_hwdevice_ctx_create$address() {
+        return av_hwdevice_ctx_create.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int av_hwdevice_ctx_create(AVBufferRef **device_ctx, enum AVHWDeviceType type, const char *device, AVDictionary *opts, int flags)
+     * }
+     */
+    public static int av_hwdevice_ctx_create(MemorySegment device_ctx, int type, MemorySegment device, MemorySegment opts, int flags) {
+        var mh$ = av_hwdevice_ctx_create.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_hwdevice_ctx_create", device_ctx, type, device, opts, flags);
+            }
+            return (int)mh$.invokeExact(device_ctx, type, device, opts, flags);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class av_hwframe_transfer_data {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_hwframe_transfer_data");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int av_hwframe_transfer_data(AVFrame *dst, const AVFrame *src, int flags)
+     * }
+     */
+    public static FunctionDescriptor av_hwframe_transfer_data$descriptor() {
+        return av_hwframe_transfer_data.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int av_hwframe_transfer_data(AVFrame *dst, const AVFrame *src, int flags)
+     * }
+     */
+    public static MethodHandle av_hwframe_transfer_data$handle() {
+        return av_hwframe_transfer_data.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int av_hwframe_transfer_data(AVFrame *dst, const AVFrame *src, int flags)
+     * }
+     */
+    public static MemorySegment av_hwframe_transfer_data$address() {
+        return av_hwframe_transfer_data.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int av_hwframe_transfer_data(AVFrame *dst, const AVFrame *src, int flags)
+     * }
+     */
+    public static int av_hwframe_transfer_data(MemorySegment dst, MemorySegment src, int flags) {
+        var mh$ = av_hwframe_transfer_data.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_hwframe_transfer_data", dst, src, flags);
+            }
+            return (int)mh$.invokeExact(dst, src, flags);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
 
     private static class avcodec_find_decoder {
         public static final FunctionDescriptor DESC = FunctionDescriptor.of(
@@ -830,6 +1094,83 @@ public class FFmpeg {
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
+    }
+    private static final int AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * enum <anonymous>.AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX = 1
+     * }
+     */
+    public static int AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX() {
+        return AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX;
+    }
+
+    private static class avcodec_get_hw_config {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("avcodec_get_hw_config");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * const AVCodecHWConfig *avcodec_get_hw_config(const AVCodec *codec, int index)
+     * }
+     */
+    public static FunctionDescriptor avcodec_get_hw_config$descriptor() {
+        return avcodec_get_hw_config.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * const AVCodecHWConfig *avcodec_get_hw_config(const AVCodec *codec, int index)
+     * }
+     */
+    public static MethodHandle avcodec_get_hw_config$handle() {
+        return avcodec_get_hw_config.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * const AVCodecHWConfig *avcodec_get_hw_config(const AVCodec *codec, int index)
+     * }
+     */
+    public static MemorySegment avcodec_get_hw_config$address() {
+        return avcodec_get_hw_config.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * const AVCodecHWConfig *avcodec_get_hw_config(const AVCodec *codec, int index)
+     * }
+     */
+    public static MemorySegment avcodec_get_hw_config(MemorySegment codec, int index) {
+        var mh$ = avcodec_get_hw_config.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("avcodec_get_hw_config", codec, index);
+            }
+            return (MemorySegment)mh$.invokeExact(codec, index);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+    private static final int AV_STREAM_GROUP_PARAMS_TILE_GRID = (int)3L;
+    /**
+     * {@snippet lang=c :
+     * enum AVStreamGroupParamsType.AV_STREAM_GROUP_PARAMS_TILE_GRID = 3
+     * }
+     */
+    public static int AV_STREAM_GROUP_PARAMS_TILE_GRID() {
+        return AV_STREAM_GROUP_PARAMS_TILE_GRID;
     }
 
     private static class avformat_version {
