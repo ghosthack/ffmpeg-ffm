@@ -25,5 +25,15 @@ no native software AV1 decoder. The license text ships in each jar as
 BSD-2 static linking imposes no copyleft: the combined library remains
 LGPL v2.1+.
 
+## libjxl (with highway, brotli, skcms)
+
+`libavcodec` statically links **libjxl** (https://github.com/libjxl/libjxl),
+the JPEG XL reference decoder, licensed **BSD-3-Clause**, together with its
+dependencies **highway** (Apache-2.0), **brotli** (MIT), and **skcms**
+(BSD-3-Clause). The license texts ship in each jar as `LICENSE.libjxl`,
+`LICENSE.highway`, `LICENSE.brotli`, and `LICENSE.skcms`; exact versions and
+source URLs are in `BUILD-INFO.txt`. None of these licenses impose copyleft:
+the combined library remains LGPL v2.1+.
+
 The binding code itself (`ffmpeg-ffm`) contains no FFmpeg source and is MIT
 licensed (see LICENSE).

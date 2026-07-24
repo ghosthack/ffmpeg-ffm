@@ -7,13 +7,15 @@ no JNI.
 | Artifact | Contents | License |
 |---|---|---|
 | `io.github.ghosthack:ffmpeg-ffm` | jextract-generated stubs + runtime loader (pure Java, JDK ≥ 22) | MIT |
-| `io.github.ghosthack:ffmpeg-ffm-natives` (classifier `macos-arm64`, `windows-x64`) | FFmpeg 8.1.2 shared libraries, built from unmodified source, LGPL-only configuration | LGPL v2.1+ (see THIRD-PARTY.md) |
+| `io.github.ghosthack:ffmpeg-ffm-natives` (classifier `macos-arm64`, `windows-x64`, `linux-x64`) | FFmpeg 8.1.2 shared libraries, built from unmodified source, LGPL-only configuration | LGPL v2.1+ (see THIRD-PARTY.md) |
 
-Status: v0.1. Decode-oriented surface (demux + decode + swscale; no encoders,
+Status: decode-oriented surface (demux + decode + swscale; no encoders,
 muxers, or network), curated to the API listed in `jextract/gen-bindings.sh`.
-Platforms: macos-arm64 and windows-x64. AV1 decodes in software via a
-statically linked dav1d (BSD-2) — FFmpeg has no native AV1 software decoder,
-only a hwaccel shim.
+Platforms: macos-arm64, windows-x64, and linux-x64. AV1 decodes in software
+via a statically linked dav1d (BSD-2) — FFmpeg has no native AV1 software
+decoder, only a hwaccel shim. JPEG XL decodes via a statically linked libjxl
+0.11 (BSD-3, with highway/brotli/skcms; since 0.3.0) — FFmpeg has only a JXL
+parser natively.
 
 **Software decode by design.** All decoding runs on the CPU (with full SIMD:
 dav1d and FFmpeg ship hand-written NEON/AVX kernels selected at runtime). The

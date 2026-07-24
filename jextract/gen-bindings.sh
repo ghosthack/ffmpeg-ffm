@@ -109,6 +109,11 @@ rm -rf "$GEN_DIR"
   --include-constant AV_HWDEVICE_TYPE_D3D11VA \
   --include-constant AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX \
   --include-constant AV_PIX_FMT_NONE \
+  --include-constant AV_CODEC_ID_JPEGXL \
+  --include-constant AV_PIX_FMT_RGB48LE \
+  --include-constant AV_PIX_FMT_RGBA64LE \
+  --include-constant AV_PIX_FMT_GRAY16LE \
+  --include-constant AV_INPUT_BUFFER_PADDING_SIZE \
   "$ROOT/jextract/ffmpeg_api.h"
 
 # Replace the baked absolute-path lookup chain with the runtime loader.

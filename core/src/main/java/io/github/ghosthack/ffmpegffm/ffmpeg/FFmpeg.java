@@ -85,6 +85,15 @@ public class FFmpeg {
     public static int AV_LOG_ERROR() {
         return AV_LOG_ERROR;
     }
+    private static final int AV_INPUT_BUFFER_PADDING_SIZE = (int)64L;
+    /**
+     * {@snippet lang=c :
+     * #define AV_INPUT_BUFFER_PADDING_SIZE 64
+     * }
+     */
+    public static int AV_INPUT_BUFFER_PADDING_SIZE() {
+        return AV_INPUT_BUFFER_PADDING_SIZE;
+    }
     private static final int AV_DICT_IGNORE_SUFFIX = (int)2L;
     /**
      * {@snippet lang=c :
@@ -264,6 +273,42 @@ public class FFmpeg {
      */
     public static int AV_PIX_FMT_BGRA() {
         return AV_PIX_FMT_BGRA;
+    }
+    private static final int AV_PIX_FMT_GRAY16LE = (int)30L;
+    /**
+     * {@snippet lang=c :
+     * enum AVPixelFormat.AV_PIX_FMT_GRAY16LE = 30
+     * }
+     */
+    public static int AV_PIX_FMT_GRAY16LE() {
+        return AV_PIX_FMT_GRAY16LE;
+    }
+    private static final int AV_PIX_FMT_RGB48LE = (int)35L;
+    /**
+     * {@snippet lang=c :
+     * enum AVPixelFormat.AV_PIX_FMT_RGB48LE = 35
+     * }
+     */
+    public static int AV_PIX_FMT_RGB48LE() {
+        return AV_PIX_FMT_RGB48LE;
+    }
+    private static final int AV_PIX_FMT_RGBA64LE = (int)105L;
+    /**
+     * {@snippet lang=c :
+     * enum AVPixelFormat.AV_PIX_FMT_RGBA64LE = 105
+     * }
+     */
+    public static int AV_PIX_FMT_RGBA64LE() {
+        return AV_PIX_FMT_RGBA64LE;
+    }
+    private static final int AV_CODEC_ID_JPEGXL = (int)258L;
+    /**
+     * {@snippet lang=c :
+     * enum AVCodecID.AV_CODEC_ID_JPEGXL = 258
+     * }
+     */
+    public static int AV_CODEC_ID_JPEGXL() {
+        return AV_CODEC_ID_JPEGXL;
     }
 
     private static class avcodec_get_name {
