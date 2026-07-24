@@ -73,8 +73,10 @@ if [ ! -f "$HWY_PREFIX/lib/pkgconfig/libhwy.pc" ]; then
 fi
 
 if [ ! -d "$LIBJXL_SRC" ]; then
+  # --exclude tools/benchmark: those scripts are symlinks, which MSYS2 tar
+  # cannot create without special privileges — and the build never uses them.
   curl -sfL "https://github.com/libjxl/libjxl/archive/refs/tags/v$LIBJXL_VERSION.tar.gz" \
-    | tar xz -C "$ROOT/build"
+    | tar xz -C "$ROOT/build" --exclude='*/tools/benchmark/*'
   ( cd "$LIBJXL_SRC" && ./deps.sh )   # fetches pinned third_party (skcms et al.)
 fi
 export PKG_CONFIG_PATH="$BROTLI_PREFIX/lib/pkgconfig:$HWY_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
