@@ -129,5 +129,14 @@
         <native.classifier>windows-x64</native.classifier>
       </properties>
     </profile>
+    <profile>
+      <id>linux-x64</id>
+      <activation>
+        <os><family>unix</family><name>linux</name><arch>amd64</arch></os>
+      </activation>
+      <properties>
+        <native.classifier>linux-x64</native.classifier>
+      </properties>
+    </profile>
   </profiles>
 </project>

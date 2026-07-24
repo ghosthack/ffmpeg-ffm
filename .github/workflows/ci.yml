@@ -88,8 +88,38 @@ jobs:
           path: natives/src/main/resources/natives/windows-x64/
           if-no-files-found: error
 
+  natives-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 22
+          cache: maven
+
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y meson ninja-build nasm pkg-config patchelf
+
+      - name: Fetch FFmpeg source
+        run: |
+          mkdir -p build
+          curl -sfL "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz" | tar xJ -C build
+
+      - name: Build natives (FFmpeg + dav1d)
+        run: build-natives/linux-x64.sh
+
+      - name: Test against built natives
+        run: mvn -B clean install
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: natives-linux-x64
+          path: natives/src/main/resources/natives/linux-x64/
+          if-no-files-found: error
+
   release:
-    needs: [natives-macos, natives-windows]
+    needs: [natives-macos, natives-windows, natives-linux]
     if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
@@ -172,10 +202,16 @@ jobs:
           name: natives-windows-x64
           path: natives/src/main/resources/natives/windows-x64/
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: natives-linux-x64
+          path: natives/src/main/resources/natives/linux-x64/
+
       - name: Deploy to Maven Central
-        # Tests already ran against real natives on the mac/windows jobs;
-        # this linux runner has no platform natives to run them against.
-        run: mvn -B clean deploy -P release,all-natives -DskipTests
+        # Tests already ran against real natives on the platform jobs.
+        # native.classifier pinned: the linux-x64 OS profile would otherwise
+        # flip the default jar execution and drop the macos classifier.
+        run: mvn -B clean deploy -P release,all-natives -Dnative.classifier=macos-arm64 -DskipTests
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
