@@ -2043,6 +2043,128 @@ public class FFmpeg {
            throw new AssertionError("should not reach here", ex$);
         }
     }
+
+    private static class av_opt_set {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_opt_set");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int av_opt_set(void *obj, const char *name, const char *val, int search_flags)
+     * }
+     */
+    public static FunctionDescriptor av_opt_set$descriptor() {
+        return av_opt_set.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int av_opt_set(void *obj, const char *name, const char *val, int search_flags)
+     * }
+     */
+    public static MethodHandle av_opt_set$handle() {
+        return av_opt_set.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int av_opt_set(void *obj, const char *name, const char *val, int search_flags)
+     * }
+     */
+    public static MemorySegment av_opt_set$address() {
+        return av_opt_set.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int av_opt_set(void *obj, const char *name, const char *val, int search_flags)
+     * }
+     */
+    public static int av_opt_set(MemorySegment obj, MemorySegment name, MemorySegment val, int search_flags) {
+        var mh$ = av_opt_set.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_opt_set", obj, name, val, search_flags);
+            }
+            return (int)mh$.invokeExact(obj, name, val, search_flags);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class av_opt_set_int {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_LONG_LONG,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_opt_set_int");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int av_opt_set_int(void *obj, const char *name, int64_t val, int search_flags)
+     * }
+     */
+    public static FunctionDescriptor av_opt_set_int$descriptor() {
+        return av_opt_set_int.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int av_opt_set_int(void *obj, const char *name, int64_t val, int search_flags)
+     * }
+     */
+    public static MethodHandle av_opt_set_int$handle() {
+        return av_opt_set_int.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int av_opt_set_int(void *obj, const char *name, int64_t val, int search_flags)
+     * }
+     */
+    public static MemorySegment av_opt_set_int$address() {
+        return av_opt_set_int.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int av_opt_set_int(void *obj, const char *name, int64_t val, int search_flags)
+     * }
+     */
+    public static int av_opt_set_int(MemorySegment obj, MemorySegment name, long val, int search_flags) {
+        var mh$ = av_opt_set_int.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_opt_set_int", obj, name, val, search_flags);
+            }
+            return (int)mh$.invokeExact(obj, name, val, search_flags);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
     private static final int SWS_BILINEAR = (int)2L;
     /**
      * {@snippet lang=c :

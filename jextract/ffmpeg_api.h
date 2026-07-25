@@ -8,5 +8,6 @@
 #include <libavutil/dict.h>
 #include <libavutil/hwcontext.h>
 #include <libavutil/imgutils.h>
+#include <libavutil/opt.h>
 #include <libavutil/pixdesc.h>
 #include <libswscale/swscale.h>

@@ -44,6 +44,8 @@ rm -rf "$GEN_DIR"
   --include-function avcodec_alloc_context3 \
   --include-function avcodec_parameters_to_context \
   --include-function avcodec_open2 \
+  --include-function av_opt_set_int \
+  --include-function av_opt_set \
   --include-function avcodec_free_context \
   --include-function avcodec_send_packet \
   --include-function avcodec_receive_frame \
