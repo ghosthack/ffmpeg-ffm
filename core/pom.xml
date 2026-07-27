@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.ghosthack</groupId>
     <artifactId>ffmpeg-ffm-parent</artifactId>
-    <version>8.1.2-0.3.1</version>
+    <version>8.1.2-0.3.2</version>
   </parent>
 
   <artifactId>ffmpeg-ffm</artifactId>
@@ -46,7 +46,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.5.2</version>
         <configuration>
-          <argLine>--enable-native-access=ALL-UNNAMED</argLine>
+          <argLine>--enable-native-access=ffmpeg.ffm</argLine>
         </configuration>
       </plugin>
     </plugins>

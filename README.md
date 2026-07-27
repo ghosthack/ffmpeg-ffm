@@ -31,18 +31,20 @@ binding release — regenerated stubs, byte-identical natives.
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm</artifactId>
-  <version>8.1.2-0.2.0</version>
+  <version>8.1.2-0.3.2</version>
 </dependency>
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm-natives</artifactId>
-  <version>8.1.2-0.2.0</version>
+  <version>8.1.2-0.3.2</version>
   <classifier>macos-arm64</classifier> <!-- or windows-x64 -->
   <scope>runtime</scope>
 </dependency>
 ```
 
-Run with `--enable-native-access=ALL-UNNAMED` (or your module name). Then:
+When using the module path, declare `requires ffmpeg.ffm;` and run with
+`--enable-native-access=ffmpeg.ffm`. When using the class path, run with
+`--enable-native-access=ALL-UNNAMED`. Then:
 
 ```java
 import io.github.ghosthack.ffmpegffm.ffmpeg.FFmpeg;
