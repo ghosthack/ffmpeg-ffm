@@ -1,67 +1,43 @@
 # Publishing to Maven Central
 
-Releases publish **from GitHub Actions**, reusing the pipeline proven by
-`imageio-native` (same portal account, same secret names, same
-push-to-publish flow). `.github/workflows/ci.yml`:
+Publishing is gated by a non-prerelease GitHub Release. Pushes and pull
+requests only build and test; they never publish.
 
-1. `natives-macos` / `natives-windows` — build FFmpeg + dav1d **from source**
-   on real runners via `build-natives/*.sh`, run the smoke tests against the
-   result, upload the staged sets as artifacts. Runs on every push/PR.
-2. `release` — on push to `main`: if the parent pom `<version>` changed and is
-   not a SNAPSHOT, create GitHub release `v<version>`. (`workflow_dispatch`
-   forces a deploy of the current version.)
-3. `deploy` — downloads both native sets and runs
-   `mvn clean deploy -P release,all-natives`: one deployment bundle containing
-   parent + core (+sources/javadoc) + both natives classifier jars, signed,
-   auto-published (`autoPublish=true`).
+## Release procedure
 
-So the release procedure is: **stage natives nowhere, just bump the version in
-the poms, commit, push to main.** CI does the rest.
+1. Set the same non-SNAPSHOT release version in the parent and module poms,
+   including the SCM tag, and update versioned documentation.
+2. Merge the release commit to `main` and wait for CI to pass.
+3. Publish a GitHub Release tagged `v<version>` and target it at that exact
+   commit.
+4. The release workflow validates that the tag matches `project.version`,
+   rebuilds and tests the macOS ARM64, Windows x64, and Linux x64 natives from
+   the tag, and deploys those exact artifacts to Maven Central.
 
-## Repo secrets (Settings → Secrets → Actions)
+The Central plugin uses `autoPublish=true` and waits until the deployment is
+published. No separate portal approval is required.
 
-Same four names as imageio-native — copy the values from wherever they are
-kept (GitHub cannot display existing secrets; regenerate if lost):
+## Repo secrets
+
+Configure these under Settings → Secrets and variables → Actions:
 
 | Secret | Source |
 |---|---|
-| `MAVEN_CENTRAL_USERNAME` / `MAVEN_CENTRAL_PASSWORD` | central.sonatype.com → Account → user token (regenerating invalidates the old one — update imageio-native's secrets too if you regenerate) |
-| `GPG_PRIVATE_KEY` | `gpg --armor --export-secret-keys <KEYID>`; if the key exists only as imageio-native's secret, generate a fresh key, `gpg --keyserver keyserver.ubuntu.com --send-keys <KEYID>`, and use that |
-| `GPG_PASSPHRASE` | passphrase of that key |
+| `MAVEN_CENTRAL_USERNAME` / `MAVEN_CENTRAL_PASSWORD` | A Central Portal user token, split into its username and password |
+| `GPG_PRIVATE_KEY` | ASCII-armored private key from `gpg --armor --export-secret-keys <KEYID>` |
+| `GPG_PASSPHRASE` | Passphrase for that key |
 
-The `io.github.ghosthack` namespace is already verified on the portal (it
-published imageio-native), so no namespace setup is needed.
+The `io.github.ghosthack` namespace is already verified on Central.
 
-## Deploy troubleshooting (lessons from 2026-07-22)
+## Recovery and local checks
 
-- **"Deployment ... failed while publishing" right after rotating the signing
-  key**: Central validates signatures against public keyservers, and a freshly
-  `--send-keys`'d key takes ~1–15 min to become fetchable. Wait until
-  `https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x<KEYID>` returns the
-  key, then redeploy. Publishing to `keys.openpgp.org` as well is a cheap hedge
-  (it serves key material by ID without email verification).
-- **`gh run rerun --failed` dies in `download-artifact` with a 404** ("workflow
-  run not found"): cross-attempt artifact access is flaky. Don't fight it —
-  dispatch a fresh run instead: `gh workflow run ci.yml`.
-- **Artifact not downloadable right after a green deploy**: repo1.maven.org
-  lags `autoPublish` by ~10–15 min. Poll the pom URL before declaring victory
-  (or before pointing downstream builds at the new version).
+If a release run fails, fix the underlying issue and rerun the entire workflow
+with `gh run rerun <run-id> -R ghosthack/ffmpeg-ffm`. Rerunning only failed
+jobs can lose access to native artifacts from the previous attempt.
 
-## Local fallback
+`mvn -Prelease -Dgpg.skip=true clean verify` checks sources, javadocs, and
+packaging locally without publishing. Releases are immutable: publish changed
+content under a new version rather than rebuilding an existing version.
 
-`mvn -Prelease -Dgpg.skip=true clean verify` dry-runs the build side (sources,
-javadoc, packaging) with no keys. A full local deploy additionally needs the
-portal token in `~/.m2/settings.xml` (server id `central`) and a local gpg key
-— neither is normally present; prefer the CI path.
-
-## Notes
-
-- Version discipline: releases are immutable — any change is a version bump
-  (`<ffmpeg>-<binding-train>` scheme, see README), never a rebuild-in-place.
-- The natives module is `pom`-packaging with attached classifier jars, so
-  Central's sources/javadoc rule does not apply to it; if portal validation
-  ever objects, attach empty `-sources`/`-javadoc` jars via extra
-  `maven-jar-plugin` executions.
-- First CI run on a new runner image is the risky one (brew/msys2 package
-  drift); the natives jobs run on every push, so breakage surfaces before a
-  release, not during one.
+After a successful release, Maven Central mirrors can take several minutes to
+serve the new artifacts.
