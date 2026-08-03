@@ -772,6 +772,15 @@ public class FFmpeg {
            throw new AssertionError("should not reach here", ex$);
         }
     }
+    private static final int AV_FRAME_DATA_ICC_PROFILE = (int)15L;
+    /**
+     * {@snippet lang=c :
+     * enum AVFrameSideDataType.AV_FRAME_DATA_ICC_PROFILE = 15
+     * }
+     */
+    public static int AV_FRAME_DATA_ICC_PROFILE() {
+        return AV_FRAME_DATA_ICC_PROFILE;
+    }
 
     private static class av_frame_alloc {
         public static final FunctionDescriptor DESC = FunctionDescriptor.of(
@@ -938,6 +947,65 @@ public class FFmpeg {
                 traceDowncall("av_frame_unref", frame);
             }
             mh$.invokeExact(frame);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class av_frame_get_side_data {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_frame_get_side_data");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * AVFrameSideData *av_frame_get_side_data(const AVFrame *frame, enum AVFrameSideDataType type)
+     * }
+     */
+    public static FunctionDescriptor av_frame_get_side_data$descriptor() {
+        return av_frame_get_side_data.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * AVFrameSideData *av_frame_get_side_data(const AVFrame *frame, enum AVFrameSideDataType type)
+     * }
+     */
+    public static MethodHandle av_frame_get_side_data$handle() {
+        return av_frame_get_side_data.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * AVFrameSideData *av_frame_get_side_data(const AVFrame *frame, enum AVFrameSideDataType type)
+     * }
+     */
+    public static MemorySegment av_frame_get_side_data$address() {
+        return av_frame_get_side_data.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * AVFrameSideData *av_frame_get_side_data(const AVFrame *frame, enum AVFrameSideDataType type)
+     * }
+     */
+    public static MemorySegment av_frame_get_side_data(MemorySegment frame, int type) {
+        var mh$ = av_frame_get_side_data.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_frame_get_side_data", frame, type);
+            }
+            return (MemorySegment)mh$.invokeExact(frame, type);
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }

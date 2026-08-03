@@ -57,6 +57,7 @@ rm -rf "$GEN_DIR"
   --include-function av_frame_alloc \
   --include-function av_frame_free \
   --include-function av_frame_unref \
+  --include-function av_frame_get_side_data \
   --include-function av_strerror \
   --include-function av_log_set_level \
   --include-function av_get_pix_fmt_name \
@@ -78,6 +79,7 @@ rm -rf "$GEN_DIR"
   --include-struct AVCodec \
   --include-struct AVFrame \
   --include-struct AVPacket \
+  --include-struct AVFrameSideData \
   --include-struct AVRational \
   --include-struct AVIOInterruptCB \
   --include-struct AVProbeData \
@@ -91,6 +93,7 @@ rm -rf "$GEN_DIR"
   --include-typedef AVCodecID \
   --include-typedef AVChannelOrder \
   --include-typedef AVHWDeviceType \
+  --include-typedef AVFrameSideDataType \
   --include-typedef AVStreamGroupParamsType \
   --include-constant AVMEDIA_TYPE_UNKNOWN \
   --include-constant AVMEDIA_TYPE_VIDEO \
@@ -116,6 +119,7 @@ rm -rf "$GEN_DIR"
   --include-constant AV_PIX_FMT_RGBA64LE \
   --include-constant AV_PIX_FMT_GRAY16LE \
   --include-constant AV_INPUT_BUFFER_PADDING_SIZE \
+  --include-constant AV_FRAME_DATA_ICC_PROFILE \
   "$ROOT/jextract/ffmpeg_api.h"
 
 # Replace the baked absolute-path lookup chain with the runtime loader.
