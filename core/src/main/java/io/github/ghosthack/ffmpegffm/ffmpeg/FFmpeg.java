@@ -1342,6 +1342,64 @@ public class FFmpeg {
         }
     }
 
+    private static class av_find_input_format {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("av_find_input_format");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * const AVInputFormat *av_find_input_format(const char *short_name)
+     * }
+     */
+    public static FunctionDescriptor av_find_input_format$descriptor() {
+        return av_find_input_format.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * const AVInputFormat *av_find_input_format(const char *short_name)
+     * }
+     */
+    public static MethodHandle av_find_input_format$handle() {
+        return av_find_input_format.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * const AVInputFormat *av_find_input_format(const char *short_name)
+     * }
+     */
+    public static MemorySegment av_find_input_format$address() {
+        return av_find_input_format.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * const AVInputFormat *av_find_input_format(const char *short_name)
+     * }
+     */
+    public static MemorySegment av_find_input_format(MemorySegment short_name) {
+        var mh$ = av_find_input_format.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("av_find_input_format", short_name);
+            }
+            return (MemorySegment)mh$.invokeExact(short_name);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
     private static class avformat_open_input {
         public static final FunctionDescriptor DESC = FunctionDescriptor.of(
             FFmpeg.C_INT,

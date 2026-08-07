@@ -35,6 +35,7 @@ rm -rf "$GEN_DIR"
   -l ":$PREFIX/lib/libavcodec.dylib" \
   -l ":$PREFIX/lib/libswscale.dylib" \
   --include-function avformat_version \
+  --include-function av_find_input_format \
   --include-function avformat_open_input \
   --include-function avformat_find_stream_info \
   --include-function avformat_close_input \

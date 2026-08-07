@@ -31,12 +31,12 @@ binding release — regenerated stubs, byte-identical natives.
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm</artifactId>
-  <version>8.1.2-0.3.3</version>
+  <version>8.1.2-0.3.4</version>
 </dependency>
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm-natives</artifactId>
-  <version>8.1.2-0.3.3</version>
+  <version>8.1.2-0.3.4</version>
   <classifier>macos-arm64</classifier> <!-- or windows-x64 / linux-x64 -->
   <scope>runtime</scope>
 </dependency>

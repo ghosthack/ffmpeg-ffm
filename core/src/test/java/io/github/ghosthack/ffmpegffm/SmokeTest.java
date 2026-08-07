@@ -32,6 +32,16 @@ class SmokeTest {
     }
 
     @Test
+    void findsAnExplicitInputFormatByShortName() {
+        try (Arena arena = Arena.ofConfined()) {
+            assertNotEquals(MemorySegment.NULL,
+                    FFmpeg.av_find_input_format(arena.allocateFrom("mjpeg")));
+            assertEquals(MemorySegment.NULL,
+                    FFmpeg.av_find_input_format(arena.allocateFrom("not-a-real-demuxer")));
+        }
+    }
+
+    @Test
     void decodesFirstFrameOfFixture() throws Exception {
         Path fixture = Files.createTempFile("ffmpeg-ffm-sample", ".mp4");
         try (var in = Objects.requireNonNull(getClass().getResourceAsStream("/sample.mp4"))) {
