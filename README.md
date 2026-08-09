@@ -54,6 +54,20 @@ int version = FFmpeg.avformat_version(); // natives extract + load on first use
 
 `core/src/test/java/.../SmokeTest.java` is a complete open→decode→scale example.
 
+### Decoder send/receive loop
+
+Demuxers may return zero-sized packets (Ogg/Theora does this for duplicate
+frames). Do not pass those packets to `avcodec_send_packet`: libavcodec treats
+an empty packet like a decoder drain, so a later data packet can fail with
+`EINVAL`. `DecoderSupport.hasPayload(packet)` distinguishes packets that are
+safe to send.
+
+The send/receive API also requires callers to retain and resend the same packet
+when `avcodec_send_packet` returns `EAGAIN`; reading a replacement packet loses
+input. Use `DecoderSupport.averrorEagain()` for the platform-specific native
+error value. `ThreadedTheoraSmokeTest` is the complete buffered example,
+including empty-packet filtering, packet retention, and final draining.
+
 ### Library resolution order
 
 1. `-Dffmpegffm.libdir=<dir>` or `FFMPEG_FFM_LIBDIR` — use an existing FFmpeg
