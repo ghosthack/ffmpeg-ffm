@@ -31,12 +31,12 @@ binding release — regenerated stubs, byte-identical natives.
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm</artifactId>
-  <version>8.1.2-0.3.4</version>
+  <version>8.1.2-0.3.5</version>
 </dependency>
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm-natives</artifactId>
-  <version>8.1.2-0.3.4</version>
+  <version>8.1.2-0.3.5</version>
   <classifier>macos-arm64</classifier> <!-- or windows-x64 / linux-x64 -->
   <scope>runtime</scope>
 </dependency>
@@ -95,7 +95,9 @@ on macOS (layouts are portable across platforms for FFmpeg's public API).
 macOS (arm64):
 
 ```sh
-mkdir -p build && curl -sfL https://ffmpeg.org/releases/ffmpeg-8.1.2.tar.xz | tar xJ -C build
+mkdir -p build/ffmpeg-8.1.2
+curl -sfL https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n8.1.2.tar.gz \
+  | tar xz --strip-components=1 -C build/ffmpeg-8.1.2
 build-natives/macos-arm64.sh     # configure/make, stage dylibs + manifest
 jextract/gen-bindings.sh         # regenerate stubs (needs tools/jextract-22, see tools/README.md)
 mvn install                      # installs ffmpeg-ffm + natives:macos-arm64, runs smoke tests

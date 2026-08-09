@@ -39,8 +39,10 @@ jobs:
 
       - name: Fetch FFmpeg source
         run: |
-          mkdir -p build
-          curl -sfL "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz" | tar xJ -C build
+          mkdir -p "build/ffmpeg-${FFMPEG_VERSION}"
+          curl --fail --location --retry 5 --retry-all-errors \
+            "https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n${FFMPEG_VERSION}.tar.gz" \
+            | tar xz --strip-components=1 -C "build/ffmpeg-${FFMPEG_VERSION}"
 
       - name: Build natives (FFmpeg + dav1d)
         run: build-natives/macos-arm64.sh
@@ -86,8 +88,10 @@ jobs:
 
       - name: Fetch FFmpeg source
         run: |
-          mkdir -p build
-          curl -sfL "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz" | tar xJ -C build
+          mkdir -p "build/ffmpeg-${FFMPEG_VERSION}"
+          curl --fail --location --retry 5 --retry-all-errors \
+            "https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n${FFMPEG_VERSION}.tar.gz" \
+            | tar xz --strip-components=1 -C "build/ffmpeg-${FFMPEG_VERSION}"
 
       - name: Build natives (FFmpeg + dav1d)
         run: ./build-natives/windows-x64.sh
@@ -119,8 +123,10 @@ jobs:
 
       - name: Fetch FFmpeg source
         run: |
-          mkdir -p build
-          curl -sfL "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz" | tar xJ -C build
+          mkdir -p "build/ffmpeg-${FFMPEG_VERSION}"
+          curl --fail --location --retry 5 --retry-all-errors \
+            "https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n${FFMPEG_VERSION}.tar.gz" \
+            | tar xz --strip-components=1 -C "build/ffmpeg-${FFMPEG_VERSION}"
 
       - name: Build natives (FFmpeg + dav1d)
         run: build-natives/linux-x64.sh

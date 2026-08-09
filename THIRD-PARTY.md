@@ -9,7 +9,7 @@ The `ffmpeg-ffm-natives` classifier jars contain shared libraries built from
 - No `--enable-gpl`, `--enable-version3`, or `--enable-nonfree` components are
   included; the exact configure line ships in each jar's `BUILD-INFO.txt`.
 - The license text ships in each jar as `COPYING.LGPLv2.1`.
-- Corresponding source: `https://ffmpeg.org/releases/ffmpeg-<version>.tar.xz`
+- Corresponding source: `https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n<version>.tar.gz`
   (version recorded in `BUILD-INFO.txt`).
 - The libraries are dynamically loaded and user-replaceable: point
   `FFMPEG_FFM_LIBDIR` (or `-Dffmpegffm.libdir`) at any directory containing a
