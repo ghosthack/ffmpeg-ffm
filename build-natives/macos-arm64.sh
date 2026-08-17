@@ -1,5 +1,5 @@
 #!/bin/sh
-# Build FFmpeg (LGPL, decode-only, zero external deps) for macos-arm64 and stage
+# Build FFmpeg (LGPL, decode + curated remux, zero external deps) for macos-arm64 and stage
 # the dylibs into natives/src/main/resources/natives/macos-arm64/.
 #
 # Usage: build-natives/macos-arm64.sh [path-to-ffmpeg-source]   (default build/ffmpeg-8.1.2)
@@ -98,7 +98,9 @@ sed -i '' 's/-lstdc++//g' "$LIBJXL_PREFIX"/lib/pkgconfig/*.pc
 CONFIGURE_FLAGS="--enable-shared --disable-static \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
-  --disable-encoders --disable-muxers --disable-network \
+  --disable-encoders --disable-muxers \
+  --enable-muxer=mov,mp4,ipod,3gp,3g2,matroska,webm,avi,ogg \
+  --disable-network \
   --disable-xlib --disable-libxcb --disable-sdl2 \
   --enable-videotoolbox --enable-audiotoolbox \
   --enable-libdav1d --enable-libjxl \

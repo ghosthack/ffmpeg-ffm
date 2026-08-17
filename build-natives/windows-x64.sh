@@ -1,5 +1,5 @@
 #!/bin/sh
-# Build FFmpeg (LGPL, decode-only, zero external deps) for windows-x64 and stage
+# Build FFmpeg (LGPL, decode + curated remux, zero external deps) for windows-x64 and stage
 # the DLLs into natives/src/main/resources/natives/windows-x64/.
 #
 # Run from an MSYS2 **MINGW64** shell on the Windows machine:
@@ -105,7 +105,9 @@ export PKG_CONFIG_PATH="$LIBJXL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 CONFIGURE_FLAGS="--enable-shared --disable-static \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
-  --disable-encoders --disable-muxers --disable-network \
+  --disable-encoders --disable-muxers \
+  --enable-muxer=mov,mp4,ipod,3gp,3g2,matroska,webm,avi,ogg \
+  --disable-network \
   --disable-xlib --disable-libxcb --disable-sdl2 \
   --enable-libdav1d --enable-libjxl \
   --pkg-config-flags=--static"

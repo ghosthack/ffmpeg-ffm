@@ -1,6 +1,6 @@
 /*
  * Wrapper header handed to jextract to generate Panama FFM stubs for the
- * FFmpeg probing / decoding surface used by the media facade.
+ * FFmpeg probing, decoding, and packet-remuxing surface.
  */
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>

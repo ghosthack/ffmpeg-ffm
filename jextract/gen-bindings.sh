@@ -42,7 +42,18 @@ rm -rf "$GEN_DIR"
   --include-function av_find_best_stream \
   --include-function av_read_frame \
   --include-function av_seek_frame \
+  --include-function avformat_alloc_output_context2 \
+  --include-function avformat_free_context \
+  --include-function avformat_new_stream \
+  --include-function avformat_write_header \
+  --include-function av_interleaved_write_frame \
+  --include-function av_write_trailer \
+  --include-function av_guess_format \
+  --include-function avformat_query_codec \
+  --include-function avio_open2 \
+  --include-function avio_closep \
   --include-function avcodec_alloc_context3 \
+  --include-function avcodec_parameters_copy \
   --include-function avcodec_parameters_to_context \
   --include-function avcodec_open2 \
   --include-function av_opt_set_int \
@@ -55,6 +66,7 @@ rm -rf "$GEN_DIR"
   --include-function av_packet_alloc \
   --include-function av_packet_free \
   --include-function av_packet_unref \
+  --include-function av_packet_rescale_ts \
   --include-function av_frame_alloc \
   --include-function av_frame_free \
   --include-function av_frame_unref \
@@ -64,6 +76,9 @@ rm -rf "$GEN_DIR"
   --include-function av_get_pix_fmt_name \
   --include-function av_dict_get \
   --include-function av_dict_count \
+  --include-function av_dict_set \
+  --include-function av_dict_copy \
+  --include-function av_dict_free \
   --include-function av_buffer_ref \
   --include-function av_buffer_unref \
   --include-function av_hwdevice_ctx_create \
@@ -74,6 +89,7 @@ rm -rf "$GEN_DIR"
   --include-function sws_freeContext \
   --include-struct AVFormatContext \
   --include-struct AVInputFormat \
+  --include-struct AVOutputFormat \
   --include-struct AVStream \
   --include-struct AVCodecParameters \
   --include-struct AVCodecContext \
@@ -110,6 +126,9 @@ rm -rf "$GEN_DIR"
   --include-constant AV_LOG_ERROR \
   --include-constant AV_LOG_QUIET \
   --include-constant AV_DICT_IGNORE_SUFFIX \
+  --include-constant AV_DICT_DONT_OVERWRITE \
+  --include-constant AVIO_FLAG_WRITE \
+  --include-constant AVFMT_NOFILE \
   --include-constant AV_STREAM_GROUP_PARAMS_TILE_GRID \
   --include-constant AV_HWDEVICE_TYPE_VIDEOTOOLBOX \
   --include-constant AV_HWDEVICE_TYPE_D3D11VA \

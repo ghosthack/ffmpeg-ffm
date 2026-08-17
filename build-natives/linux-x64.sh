@@ -1,5 +1,5 @@
 #!/bin/sh
-# Build FFmpeg (LGPL, decode-only, zero external deps) for linux-x64 and stage
+# Build FFmpeg (LGPL, decode + curated remux, zero external deps) for linux-x64 and stage
 # the .so files into natives/src/main/resources/natives/linux-x64/.
 #
 # Run on an x86-64 Linux machine (gcc, make, meson, ninja, nasm, patchelf):
@@ -104,7 +104,9 @@ sed -i 's/-lstdc++//g' "$LIBJXL_PREFIX"/lib/pkgconfig/*.pc
 CONFIGURE_FLAGS="--enable-shared --disable-static \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
-  --disable-encoders --disable-muxers --disable-network \
+  --disable-encoders --disable-muxers \
+  --enable-muxer=mov,mp4,ipod,3gp,3g2,matroska,webm,avi,ogg \
+  --disable-network \
   --disable-xlib --disable-libxcb --disable-sdl2 \
   --disable-vaapi --disable-vdpau \
   --enable-libdav1d --enable-libjxl \

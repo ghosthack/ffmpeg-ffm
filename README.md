@@ -9,8 +9,9 @@ no JNI.
 | `io.github.ghosthack:ffmpeg-ffm` | jextract-generated stubs + runtime loader (pure Java, JDK ≥ 22) | MIT |
 | `io.github.ghosthack:ffmpeg-ffm-natives` (classifier `macos-arm64`, `windows-x64`, `linux-x64`) | FFmpeg 8.1.2 shared libraries, built from unmodified source, LGPL-only configuration | LGPL v2.1+ (see THIRD-PARTY.md) |
 
-Status: decode-oriented surface (demux + decode + swscale; no encoders,
-muxers, or network), curated to the API listed in `jextract/gen-bindings.sh`.
+Status: decode plus packet-remux surface (demux + decode + swscale and curated
+MP4/MOV, Matroska/WebM, AVI, and Ogg muxers; no encoders or network), curated
+to the API listed in `jextract/gen-bindings.sh`.
 Platforms: macos-arm64, windows-x64, and linux-x64. AV1 decodes in software
 via a statically linked dav1d (BSD-2) — FFmpeg has no native AV1 software
 decoder, only a hwaccel shim. JPEG XL decodes via a statically linked libjxl
@@ -31,12 +32,12 @@ binding release — regenerated stubs, byte-identical natives.
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm</artifactId>
-  <version>8.1.2-0.3.5</version>
+  <version>8.1.2-0.3.6</version>
 </dependency>
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm-natives</artifactId>
-  <version>8.1.2-0.3.5</version>
+  <version>8.1.2-0.3.6</version>
   <classifier>macos-arm64</classifier> <!-- or windows-x64 / linux-x64 -->
   <scope>runtime</scope>
 </dependency>
@@ -67,6 +68,20 @@ when `avcodec_send_packet` returns `EAGAIN`; reading a replacement packet loses
 input. Use `DecoderSupport.averrorEagain()` for the platform-specific native
 error value. `ThreadedTheoraSmokeTest` is the complete buffered example,
 including empty-packet filtering, packet retention, and final draining.
+
+### Packet remuxing
+
+The native bundle includes the MP4/MOV family (`mov`, `mp4`, `ipod`, `3gp`,
+`3g2`), Matroska/WebM, AVI, and Ogg muxers. Encoders remain disabled: callers
+create an output context and streams, copy codec parameters, rescale packet
+timestamps, and pass the original encoded packets to
+`av_interleaved_write_frame`. `RemuxSmokeTest` is a complete MP4-to-MP4 example
+and verifies every encoded packet payload remains byte-identical.
+
+The binding deliberately exposes raw libavformat policy rather than deciding
+which container or stream metadata an application should retain. Callers own
+that allowlist and should preserve presentation-critical stream parameters and
+side data when constructing the output.
 
 ### Library resolution order
 
