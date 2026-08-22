@@ -60,11 +60,20 @@ class RemuxSmokeTest {
     @Test
     void exposesTheCuratedMuxerSet() {
         try (Arena arena = Arena.ofConfined()) {
-            for (String name : List.of("mp4", "mov", "matroska", "webm", "avi", "ogg")) {
+            for (String name : List.of(
+                    "mov", "mp4", "ipod", "matroska", "webm", "avi", "ogg",
+                    "image2", "image2pipe", "apng", "gif", "webp",
+                    "mp3", "flac", "wav")) {
                 assertNotEquals(MemorySegment.NULL,
                         FFmpeg.av_guess_format(arena.allocateFrom(name), MemorySegment.NULL,
                                 MemorySegment.NULL),
                         name + " muxer is bundled");
+            }
+            for (String suffix : List.of("3gp", "3g2")) {
+                assertNotEquals(MemorySegment.NULL,
+                        FFmpeg.av_guess_format(MemorySegment.NULL,
+                                arena.allocateFrom("output." + suffix), MemorySegment.NULL),
+                        suffix + " MOV-family filename alias is bundled");
             }
             assertEquals(MemorySegment.NULL,
                     FFmpeg.av_guess_format(arena.allocateFrom("not-a-real-muxer"),

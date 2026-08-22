@@ -99,7 +99,7 @@ CONFIGURE_FLAGS="--enable-shared --disable-static \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
   --disable-encoders --disable-muxers \
-  --enable-muxer=mov,mp4,ipod,3gp,3g2,matroska,webm,avi,ogg \
+  --enable-muxer=mov,mp4,ipod,tgp,tg2,matroska,webm,avi,ogg,image2,image2pipe,apng,gif,webp,mp3,flac,wav \
   --disable-network \
   --disable-xlib --disable-libxcb --disable-sdl2 \
   --enable-videotoolbox --enable-audiotoolbox \

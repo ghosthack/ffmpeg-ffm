@@ -6,7 +6,7 @@
 
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm-parent</artifactId>
-  <version>8.1.2-0.3.6</version>
+  <version>8.1.2-0.3.7</version>
   <packaging>pom</packaging>
 
   <name>ffmpeg-ffm parent</name>

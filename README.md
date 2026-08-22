@@ -10,8 +10,8 @@ no JNI.
 | `io.github.ghosthack:ffmpeg-ffm-natives` (classifier `macos-arm64`, `windows-x64`, `linux-x64`) | FFmpeg 8.1.2 shared libraries, built from unmodified source, LGPL-only configuration | LGPL v2.1+ (see THIRD-PARTY.md) |
 
 Status: decode plus packet-remux surface (demux + decode + swscale and curated
-MP4/MOV, Matroska/WebM, AVI, and Ogg muxers; no encoders or network), curated
-to the API listed in `jextract/gen-bindings.sh`.
+MP4/MOV, Matroska/WebM, AVI, Ogg, still-image, MP3, FLAC, and WAV muxers; no
+encoders or network), curated to the API listed in `jextract/gen-bindings.sh`.
 Platforms: macos-arm64, windows-x64, and linux-x64. AV1 decodes in software
 via a statically linked dav1d (BSD-2) — FFmpeg has no native AV1 software
 decoder, only a hwaccel shim. JPEG XL decodes via a statically linked libjxl
@@ -32,12 +32,12 @@ binding release — regenerated stubs, byte-identical natives.
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm</artifactId>
-  <version>8.1.2-0.3.6</version>
+  <version>8.1.2-0.3.7</version>
 </dependency>
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm-natives</artifactId>
-  <version>8.1.2-0.3.6</version>
+  <version>8.1.2-0.3.7</version>
   <classifier>macos-arm64</classifier> <!-- or windows-x64 / linux-x64 -->
   <scope>runtime</scope>
 </dependency>
@@ -72,11 +72,17 @@ including empty-packet filtering, packet retention, and final draining.
 ### Packet remuxing
 
 The native bundle includes the MP4/MOV family (`mov`, `mp4`, `ipod`, `3gp`,
-`3g2`), Matroska/WebM, AVI, and Ogg muxers. Encoders remain disabled: callers
-create an output context and streams, copy codec parameters, rescale packet
-timestamps, and pass the original encoded packets to
-`av_interleaved_write_frame`. `RemuxSmokeTest` is a complete MP4-to-MP4 example
-and verifies every encoded packet payload remains byte-identical.
+`3g2`), Matroska/WebM, AVI, Ogg, single-image (`image2`/`image2pipe`), APNG,
+GIF, WebP, MP3, FLAC, and WAV muxers. The single-image muxers cover JPEG, PNG,
+WebP, and JPEG XL packet output. Encoders remain disabled: callers create an
+output context and streams, copy codec parameters, rescale packet timestamps,
+and pass the original encoded packets to `av_interleaved_write_frame`.
+`RemuxSmokeTest` verifies that the curated muxers are present and that
+same-container remuxing preserves encoded packet payloads.
+
+Muxer availability alone does not prove that remuxing removes metadata carried
+inside an encoded packet or a format-required header. Applications must verify
+that property per format rather than treating this bundle as a metadata policy.
 
 The binding deliberately exposes raw libavformat policy rather than deciding
 which container or stream metadata an application should retain. Callers own
