@@ -48,7 +48,7 @@ jobs:
         run: build-natives/macos-arm64.sh
 
       - name: Test against built natives
-        run: mvn -B clean install
+        run: ./mvnw -B clean install
 
       - uses: actions/upload-artifact@v4
         with:
@@ -97,8 +97,8 @@ jobs:
         run: ./build-natives/windows-x64.sh
 
       - name: Test against built natives
-        shell: pwsh
-        run: mvn -B clean install
+        shell: bash
+        run: ./mvnw -B clean install
 
       - uses: actions/upload-artifact@v4
         with:
@@ -132,7 +132,7 @@ jobs:
         run: build-natives/linux-x64.sh
 
       - name: Test against built natives
-        run: mvn -B clean install
+        run: ./mvnw -B clean install
 
       - uses: actions/upload-artifact@v4
         with:
