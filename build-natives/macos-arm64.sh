@@ -128,8 +128,13 @@ CONFIGURE_FLAGS="--enable-shared --disable-static \
 cd "$SRC"
 # --install-name-dir='@loader_path': inter-library references resolve relative to
 # the directory the referencing dylib was extracted to — no rpath needed in the JVM.
+# -liconv: FFmpeg 8.1.2 configure bug. With --disable-autodetect it only probes
+# for iconv in libc (libc_iconv) and never takes the -liconv fallback, yet
+# --enable-iconv keeps iconv on, so libavcodec fails to link. iconv is a
+# separate library here (/usr/lib/libiconv), so name it explicitly. ld64
+# records it in every dylib, as with -lc++.
 ./configure --prefix="$PREFIX" $CONFIGURE_FLAGS --install-name-dir='@loader_path' \
-  --extra-libs='-lc++' \
+  --extra-libs='-lc++ -liconv' \
   --extra-cflags="-mmacosx-version-min=$MACOS_MIN" --extra-ldflags="-mmacosx-version-min=$MACOS_MIN"
 make -j"$(sysctl -n hw.ncpu)"
 make install
@@ -188,7 +193,7 @@ cp "$LIBJXL_SRC/third_party/skcms/LICENSE" "$DEST/LICENSE.skcms"
   echo "  Source: https://github.com/libjxl/libjxl/archive/refs/tags/v$LIBJXL_VERSION.tar.gz"
   echo "  with highway $HWY_VERSION (Apache-2.0, see LICENSE.highway),"
   echo "  brotli $BROTLI_VERSION (MIT, see LICENSE.brotli), skcms (BSD-3-Clause, see LICENSE.skcms)"
-  echo "configure: $CONFIGURE_FLAGS --install-name-dir='@loader_path' --extra-libs='-lc++' --extra-cflags/ldflags='-mmacosx-version-min=$MACOS_MIN'"
+  echo "configure: $CONFIGURE_FLAGS --install-name-dir='@loader_path' --extra-libs='-lc++ -liconv' --extra-cflags/ldflags='-mmacosx-version-min=$MACOS_MIN'"
   echo "Minimum macOS: $MACOS_MIN"
 } > "$DEST/BUILD-INFO.txt"
 
