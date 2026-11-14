@@ -99,6 +99,9 @@ sed -i 's/-lstdc++//g' "$LIBJXL_PREFIX"/lib/pkgconfig/*.pc
 # Same feature set as macos-arm64.sh, minus the Apple toolboxes. vaapi/vdpau
 # explicitly off: they would add libva/libvdpau runtime deps, breaking the
 # zero-external-deps guarantee (Linux hw decode is a future, deliberate step).
+# lzma explicitly off for the same reason: configure autodetects it whenever
+# liblzma-dev is present (preinstalled on the ubuntu-26.04 runner image) and
+# it would add liblzma.so.5; the shipped Linux natives have never included it.
 # --pkg-config-flags=--static: pull Libs.private so the static libjxl closure
 # (hwy, brotli) resolves while FFmpeg itself stays shared.
 CONFIGURE_FLAGS="--enable-shared --disable-static \
@@ -109,6 +112,7 @@ CONFIGURE_FLAGS="--enable-shared --disable-static \
   --disable-network \
   --disable-xlib --disable-libxcb --disable-sdl2 \
   --disable-vaapi --disable-vdpau \
+  --disable-lzma \
   --enable-libdav1d --enable-libjxl \
   --pkg-config-flags=--static"
 
