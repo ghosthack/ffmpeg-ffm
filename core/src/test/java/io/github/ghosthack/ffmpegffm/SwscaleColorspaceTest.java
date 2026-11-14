@@ -36,8 +36,12 @@ class SwscaleColorspaceTest {
     private static final String[] PATCH_NAMES = {"red", "green", "blue", "grey", "skin"};
     private static final int W = PATCH * PATCH_RGB.length;
     private static final int H = PATCH;
-    /** Tolerance, per channel, for swscale's fixed-point/SIMD rounding. */
-    private static final int TOL = 2;
+    /**
+     * Tolerance, per channel, for swscale's fixed-point/SIMD rounding. Measured
+     * worst cases: 1 on macOS arm64 (NEON), 2 on Windows x64. The matrix error
+     * this test detects is 6..26, so 3 leaves headroom without masking it.
+     */
+    private static final int TOL = 3;
 
     private static final double[] BT709 = {0.2126, 0.0722};
     private static final double[] BT601 = {0.299, 0.114};
