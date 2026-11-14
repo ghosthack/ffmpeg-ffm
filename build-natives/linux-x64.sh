@@ -152,6 +152,22 @@ for f in "$DEST"/*.so.*; do
   fi
 done
 
+# glibc floor gate: no staged .so may require a GLIBC_ symbol version newer
+# than GLIBC_MAX, the highest required by the published 0.3.7/0.3.8 natives
+# (libavcodec; built on ubuntu-24.04). A newer build image would otherwise
+# raise the minimum glibc silently and stop the natives loading on older
+# distros. Raising GLIBC_MAX is a deliberate compatibility decision.
+GLIBC_MAX=2.38
+for f in "$DEST"/*.so.*; do
+  top="$(objdump -T "$f" | grep -oE 'GLIBC_[0-9]+(\.[0-9]+)+' | sed 's/^GLIBC_//' | sort -uV | tail -1)"
+  [ -n "$top" ] || { echo "ERROR: no GLIBC_ symbol versions found in $f"; exit 1; }
+  if [ "$(printf '%s\n%s\n' "$top" "$GLIBC_MAX" | sort -V | tail -1)" != "$GLIBC_MAX" ]; then
+    echo "ERROR: $f requires GLIBC_$top > GLIBC_$GLIBC_MAX (symbols below)"
+    objdump -T "$f" | grep -E "GLIBC_$top([^.0-9]|$)"
+    exit 1
+  fi
+done
+
 cp "$SRC/COPYING.LGPLv2.1" "$DEST/COPYING.LGPLv2.1"
 cp "$DAV1D_SRC/COPYING" "$DEST/COPYING.dav1d"
 cp "$LIBJXL_SRC/LICENSE" "$DEST/LICENSE.libjxl"
@@ -169,6 +185,7 @@ cp "$LIBJXL_SRC/third_party/skcms/LICENSE" "$DEST/LICENSE.skcms"
   echo "  with highway $HWY_VERSION (Apache-2.0, see LICENSE.highway),"
   echo "  brotli $BROTLI_VERSION (MIT, see LICENSE.brotli), skcms (BSD-3-Clause, see LICENSE.skcms)"
   echo "configure: $CONFIGURE_FLAGS --extra-libs='-l:libstdc++.a' --extra-ldflags='-static-libgcc'"
+  echo "Maximum glibc required: $GLIBC_MAX"
 } > "$DEST/BUILD-INFO.txt"
 
 echo "Staged $(ls "$DEST" | wc -l | tr -d ' ') files into $DEST"
