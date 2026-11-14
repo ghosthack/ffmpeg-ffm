@@ -101,8 +101,16 @@ export PKG_CONFIG_PATH="$LIBJXL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 # hwaccel glue (d3d11va/dxva2) is header-only and stays enabled by default.
 # --pkg-config-flags=--static: pull Libs.private so the static libjxl closure
 # (hwy, brotli) resolves while FFmpeg itself stays shared. -lstdc++ resolves
+# --disable-autodetect: configure enables nothing just because the MSYS2
+# environment happens to have it installed; the external libraries are
+# exactly the ones enabled here. zlib, bzlib, lzma and iconv (each staged as
+# its own DLL below) and the D3D11VA/D3D12VA/DXVA2 hwaccel hooks were
+# previously autodetected. mediafoundation and schannel drop out: they only
+# serve encoders and TLS, both disabled.
 # to the staged libstdc++-6.dll (FFmpeg links with cc, not c++).
 CONFIGURE_FLAGS="--enable-shared --disable-static \
+  --disable-autodetect --enable-zlib --enable-bzlib --enable-lzma --enable-iconv \
+  --enable-d3d11va --enable-d3d12va --enable-dxva2 \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
   --disable-encoders --disable-muxers \

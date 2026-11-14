@@ -102,9 +102,16 @@ sed -i 's/-lstdc++//g' "$LIBJXL_PREFIX"/lib/pkgconfig/*.pc
 # lzma explicitly off for the same reason: configure autodetects it whenever
 # liblzma-dev is present (preinstalled on the ubuntu-26.04 runner image) and
 # it would add liblzma.so.5; the shipped Linux natives have never included it.
+# --disable-autodetect: configure enables nothing just because the runner
+# happens to have it installed; the external libraries are exactly the ones
+# enabled here (an ubuntu-26.04 image once pulled lzma in that way). zlib and
+# iconv (glibc) were previously autodetected; v4l2-m2m keeps the V4L2 mem2mem
+# hardware decoders (h264_v4l2m2m et al., kernel API only, no runtime dep)
+# that every released Linux native has shipped.
 # --pkg-config-flags=--static: pull Libs.private so the static libjxl closure
 # (hwy, brotli) resolves while FFmpeg itself stays shared.
 CONFIGURE_FLAGS="--enable-shared --disable-static \
+  --disable-autodetect --enable-zlib --enable-iconv --enable-v4l2-m2m \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
   --disable-encoders --disable-muxers \
