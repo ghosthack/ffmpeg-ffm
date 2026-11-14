@@ -122,7 +122,12 @@ CONFIGURE_FLAGS="--enable-shared --disable-static \
 
 if [ "${SKIP_BUILD:-0}" != 1 ]; then
   cd "$SRC"
-  ./configure --prefix="$PREFIX" $CONFIGURE_FLAGS --extra-libs='-lstdc++'
+  # -liconv: FFmpeg 8.1.2 configure bug. With --disable-autodetect it only
+  # probes for iconv in libc (libc_iconv) and never takes the -liconv
+  # fallback, yet --enable-iconv keeps iconv on, so libavcodec fails to link.
+  # iconv is the staged libiconv-2.dll here, so name it explicitly; the PE
+  # linker imports it only into DLLs that call it.
+  ./configure --prefix="$PREFIX" $CONFIGURE_FLAGS --extra-libs='-lstdc++ -liconv'
   make -j"$(nproc)"
   make install
 fi
@@ -176,7 +181,7 @@ cp "$LIBJXL_SRC/third_party/skcms/LICENSE" "$DEST/LICENSE.skcms"
   echo "  Source: https://github.com/libjxl/libjxl/archive/refs/tags/v$LIBJXL_VERSION.tar.gz"
   echo "  with highway $HWY_VERSION (Apache-2.0, see LICENSE.highway),"
   echo "  brotli $BROTLI_VERSION (MIT, see LICENSE.brotli), skcms (BSD-3-Clause, see LICENSE.skcms)"
-  echo "configure: $CONFIGURE_FLAGS --extra-libs='-lstdc++'"
+  echo "configure: $CONFIGURE_FLAGS --extra-libs='-lstdc++ -liconv'"
 } > "$DEST/BUILD-INFO.txt"
 
 echo "Staged $(ls "$DEST" | wc -l) files into $DEST"
