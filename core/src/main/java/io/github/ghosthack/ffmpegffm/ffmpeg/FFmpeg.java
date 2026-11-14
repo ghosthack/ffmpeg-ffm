@@ -130,6 +130,69 @@ public class FFmpeg {
     public static int AVFMT_NOFILE() {
         return AVFMT_NOFILE;
     }
+    private static final int SWS_CS_ITU709 = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * #define SWS_CS_ITU709 1
+     * }
+     */
+    public static int SWS_CS_ITU709() {
+        return SWS_CS_ITU709;
+    }
+    private static final int SWS_CS_FCC = (int)4L;
+    /**
+     * {@snippet lang=c :
+     * #define SWS_CS_FCC 4
+     * }
+     */
+    public static int SWS_CS_FCC() {
+        return SWS_CS_FCC;
+    }
+    private static final int SWS_CS_ITU601 = (int)5L;
+    /**
+     * {@snippet lang=c :
+     * #define SWS_CS_ITU601 5
+     * }
+     */
+    public static int SWS_CS_ITU601() {
+        return SWS_CS_ITU601;
+    }
+    private static final int SWS_CS_SMPTE170M = (int)5L;
+    /**
+     * {@snippet lang=c :
+     * #define SWS_CS_SMPTE170M 5
+     * }
+     */
+    public static int SWS_CS_SMPTE170M() {
+        return SWS_CS_SMPTE170M;
+    }
+    private static final int SWS_CS_SMPTE240M = (int)7L;
+    /**
+     * {@snippet lang=c :
+     * #define SWS_CS_SMPTE240M 7
+     * }
+     */
+    public static int SWS_CS_SMPTE240M() {
+        return SWS_CS_SMPTE240M;
+    }
+    private static final int SWS_CS_DEFAULT = (int)5L;
+    /**
+     * {@snippet lang=c :
+     * #define SWS_CS_DEFAULT 5
+     * }
+     */
+    public static int SWS_CS_DEFAULT() {
+        return SWS_CS_DEFAULT;
+    }
+    private static final int SWS_CS_BT2020 = (int)9L;
+    /**
+     * {@snippet lang=c :
+     * #define SWS_CS_BT2020 9
+     * }
+     */
+    public static int SWS_CS_BT2020() {
+        return SWS_CS_BT2020;
+    }
     private static final int AVMEDIA_TYPE_UNKNOWN = (int)-1L;
     /**
      * {@snippet lang=c :
@@ -292,6 +355,15 @@ public class FFmpeg {
     public static int AV_PIX_FMT_NONE() {
         return AV_PIX_FMT_NONE;
     }
+    private static final int AV_PIX_FMT_YUV420P = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum AVPixelFormat.AV_PIX_FMT_YUV420P = 0
+     * }
+     */
+    public static int AV_PIX_FMT_YUV420P() {
+        return AV_PIX_FMT_YUV420P;
+    }
     private static final int AV_PIX_FMT_BGRA = (int)28L;
     /**
      * {@snippet lang=c :
@@ -327,6 +399,96 @@ public class FFmpeg {
      */
     public static int AV_PIX_FMT_RGBA64LE() {
         return AV_PIX_FMT_RGBA64LE;
+    }
+    private static final int AVCOL_SPC_RGB = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorSpace.AVCOL_SPC_RGB = 0
+     * }
+     */
+    public static int AVCOL_SPC_RGB() {
+        return AVCOL_SPC_RGB;
+    }
+    private static final int AVCOL_SPC_BT709 = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorSpace.AVCOL_SPC_BT709 = 1
+     * }
+     */
+    public static int AVCOL_SPC_BT709() {
+        return AVCOL_SPC_BT709;
+    }
+    private static final int AVCOL_SPC_UNSPECIFIED = (int)2L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorSpace.AVCOL_SPC_UNSPECIFIED = 2
+     * }
+     */
+    public static int AVCOL_SPC_UNSPECIFIED() {
+        return AVCOL_SPC_UNSPECIFIED;
+    }
+    private static final int AVCOL_SPC_BT470BG = (int)5L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorSpace.AVCOL_SPC_BT470BG = 5
+     * }
+     */
+    public static int AVCOL_SPC_BT470BG() {
+        return AVCOL_SPC_BT470BG;
+    }
+    private static final int AVCOL_SPC_SMPTE170M = (int)6L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorSpace.AVCOL_SPC_SMPTE170M = 6
+     * }
+     */
+    public static int AVCOL_SPC_SMPTE170M() {
+        return AVCOL_SPC_SMPTE170M;
+    }
+    private static final int AVCOL_SPC_SMPTE240M = (int)7L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorSpace.AVCOL_SPC_SMPTE240M = 7
+     * }
+     */
+    public static int AVCOL_SPC_SMPTE240M() {
+        return AVCOL_SPC_SMPTE240M;
+    }
+    private static final int AVCOL_SPC_BT2020_NCL = (int)9L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorSpace.AVCOL_SPC_BT2020_NCL = 9
+     * }
+     */
+    public static int AVCOL_SPC_BT2020_NCL() {
+        return AVCOL_SPC_BT2020_NCL;
+    }
+    private static final int AVCOL_RANGE_UNSPECIFIED = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorRange.AVCOL_RANGE_UNSPECIFIED = 0
+     * }
+     */
+    public static int AVCOL_RANGE_UNSPECIFIED() {
+        return AVCOL_RANGE_UNSPECIFIED;
+    }
+    private static final int AVCOL_RANGE_MPEG = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorRange.AVCOL_RANGE_MPEG = 1
+     * }
+     */
+    public static int AVCOL_RANGE_MPEG() {
+        return AVCOL_RANGE_MPEG;
+    }
+    private static final int AVCOL_RANGE_JPEG = (int)2L;
+    /**
+     * {@snippet lang=c :
+     * enum AVColorRange.AVCOL_RANGE_JPEG = 2
+     * }
+     */
+    public static int AVCOL_RANGE_JPEG() {
+        return AVCOL_RANGE_JPEG;
     }
     private static final int AV_CODEC_ID_JPEGXL = (int)258L;
     /**
@@ -3226,6 +3388,64 @@ public class FFmpeg {
         return SWS_AREA;
     }
 
+    private static class sws_getCoefficients {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("sws_getCoefficients");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * const int *sws_getCoefficients(int colorspace)
+     * }
+     */
+    public static FunctionDescriptor sws_getCoefficients$descriptor() {
+        return sws_getCoefficients.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * const int *sws_getCoefficients(int colorspace)
+     * }
+     */
+    public static MethodHandle sws_getCoefficients$handle() {
+        return sws_getCoefficients.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * const int *sws_getCoefficients(int colorspace)
+     * }
+     */
+    public static MemorySegment sws_getCoefficients$address() {
+        return sws_getCoefficients.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * const int *sws_getCoefficients(int colorspace)
+     * }
+     */
+    public static MemorySegment sws_getCoefficients(int colorspace) {
+        var mh$ = sws_getCoefficients.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("sws_getCoefficients", colorspace);
+            }
+            return (MemorySegment)mh$.invokeExact(colorspace);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
     private static class sws_freeContext {
         public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
             FFmpeg.C_POINTER
@@ -3409,6 +3629,136 @@ public class FFmpeg {
                 traceDowncall("sws_scale", c, srcSlice, srcStride, srcSliceY, srcSliceH, dst, dstStride);
             }
             return (int)mh$.invokeExact(c, srcSlice, srcStride, srcSliceY, srcSliceH, dst, dstStride);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class sws_setColorspaceDetails {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_INT,
+            FFmpeg.C_INT,
+            FFmpeg.C_INT,
+            FFmpeg.C_INT
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("sws_setColorspaceDetails");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int sws_setColorspaceDetails(SwsContext *c, const int inv_table[4], int srcRange, const int table[4], int dstRange, int brightness, int contrast, int saturation)
+     * }
+     */
+    public static FunctionDescriptor sws_setColorspaceDetails$descriptor() {
+        return sws_setColorspaceDetails.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int sws_setColorspaceDetails(SwsContext *c, const int inv_table[4], int srcRange, const int table[4], int dstRange, int brightness, int contrast, int saturation)
+     * }
+     */
+    public static MethodHandle sws_setColorspaceDetails$handle() {
+        return sws_setColorspaceDetails.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int sws_setColorspaceDetails(SwsContext *c, const int inv_table[4], int srcRange, const int table[4], int dstRange, int brightness, int contrast, int saturation)
+     * }
+     */
+    public static MemorySegment sws_setColorspaceDetails$address() {
+        return sws_setColorspaceDetails.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int sws_setColorspaceDetails(SwsContext *c, const int inv_table[4], int srcRange, const int table[4], int dstRange, int brightness, int contrast, int saturation)
+     * }
+     */
+    public static int sws_setColorspaceDetails(MemorySegment c, MemorySegment inv_table, int srcRange, MemorySegment table, int dstRange, int brightness, int contrast, int saturation) {
+        var mh$ = sws_setColorspaceDetails.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("sws_setColorspaceDetails", c, inv_table, srcRange, table, dstRange, brightness, contrast, saturation);
+            }
+            return (int)mh$.invokeExact(c, inv_table, srcRange, table, dstRange, brightness, contrast, saturation);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class sws_getColorspaceDetails {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            FFmpeg.C_INT,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER,
+            FFmpeg.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = FFmpeg.findOrThrow("sws_getColorspaceDetails");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int sws_getColorspaceDetails(SwsContext *c, int **inv_table, int *srcRange, int **table, int *dstRange, int *brightness, int *contrast, int *saturation)
+     * }
+     */
+    public static FunctionDescriptor sws_getColorspaceDetails$descriptor() {
+        return sws_getColorspaceDetails.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int sws_getColorspaceDetails(SwsContext *c, int **inv_table, int *srcRange, int **table, int *dstRange, int *brightness, int *contrast, int *saturation)
+     * }
+     */
+    public static MethodHandle sws_getColorspaceDetails$handle() {
+        return sws_getColorspaceDetails.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int sws_getColorspaceDetails(SwsContext *c, int **inv_table, int *srcRange, int **table, int *dstRange, int *brightness, int *contrast, int *saturation)
+     * }
+     */
+    public static MemorySegment sws_getColorspaceDetails$address() {
+        return sws_getColorspaceDetails.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int sws_getColorspaceDetails(SwsContext *c, int **inv_table, int *srcRange, int **table, int *dstRange, int *brightness, int *contrast, int *saturation)
+     * }
+     */
+    public static int sws_getColorspaceDetails(MemorySegment c, MemorySegment inv_table, MemorySegment srcRange, MemorySegment table, MemorySegment dstRange, MemorySegment brightness, MemorySegment contrast, MemorySegment saturation) {
+        var mh$ = sws_getColorspaceDetails.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("sws_getColorspaceDetails", c, inv_table, srcRange, table, dstRange, brightness, contrast, saturation);
+            }
+            return (int)mh$.invokeExact(c, inv_table, srcRange, table, dstRange, brightness, contrast, saturation);
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }

@@ -32,12 +32,12 @@ binding release — regenerated stubs, byte-identical natives.
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm</artifactId>
-  <version>8.1.2-0.3.7</version>
+  <version>8.1.2-0.3.8</version>
 </dependency>
 <dependency>
   <groupId>io.github.ghosthack</groupId>
   <artifactId>ffmpeg-ffm-natives</artifactId>
-  <version>8.1.2-0.3.7</version>
+  <version>8.1.2-0.3.8</version>
   <classifier>macos-arm64</classifier> <!-- or windows-x64 / linux-x64 -->
   <scope>runtime</scope>
 </dependency>
@@ -88,6 +88,22 @@ The binding deliberately exposes raw libavformat policy rather than deciding
 which container or stream metadata an application should retain. Callers own
 that allowlist and should preserve presentation-critical stream parameters and
 side data when constructing the output.
+
+### YUV→RGB colourspace
+
+A bare `sws_getContext` decodes YUV with the BT.601 matrix and, for non-`yuvj`
+formats, limited range. BT.709 (HD) content then comes out colour-shifted
+(e.g. 220,40,40 red renders as 204,21,42). Tell the context the source matrix
+and range from the frame (since 0.3.8):
+
+1. `sws_getColorspaceDetails(...)` to read the current tables and settings;
+2. `sws_setColorspaceDetails(ctx, sws_getCoefficients(AVFrame.colorspace(f)),
+   AVFrame.color_range(f) == AVCOL_RANGE_JPEG() ? 1 : 0, <table, dstRange,
+   brightness, contrast, saturation as read>)`.
+
+`sws_getCoefficients` takes `AVColorSpace` values directly. `AVCOL_SPC_UNSPECIFIED`
+falls back to BT.601, so pick your own default (commonly BT.709 for HD) when the
+frame is untagged. `SwscaleColorspaceTest` is the worked example.
 
 ### Library resolution order
 

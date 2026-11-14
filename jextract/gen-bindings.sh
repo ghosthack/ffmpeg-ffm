@@ -87,6 +87,9 @@ rm -rf "$GEN_DIR"
   --include-function sws_getContext \
   --include-function sws_scale \
   --include-function sws_freeContext \
+  --include-function sws_setColorspaceDetails \
+  --include-function sws_getColorspaceDetails \
+  --include-function sws_getCoefficients \
   --include-struct AVFormatContext \
   --include-struct AVInputFormat \
   --include-struct AVOutputFormat \
@@ -119,6 +122,24 @@ rm -rf "$GEN_DIR"
   --include-constant AV_PIX_FMT_BGRA \
   --include-constant SWS_BILINEAR \
   --include-constant SWS_AREA \
+  --include-constant SWS_CS_ITU709 \
+  --include-constant SWS_CS_FCC \
+  --include-constant SWS_CS_ITU601 \
+  --include-constant SWS_CS_SMPTE170M \
+  --include-constant SWS_CS_SMPTE240M \
+  --include-constant SWS_CS_DEFAULT \
+  --include-constant SWS_CS_BT2020 \
+  --include-constant AV_PIX_FMT_YUV420P \
+  --include-constant AVCOL_RANGE_UNSPECIFIED \
+  --include-constant AVCOL_RANGE_MPEG \
+  --include-constant AVCOL_RANGE_JPEG \
+  --include-constant AVCOL_SPC_RGB \
+  --include-constant AVCOL_SPC_BT709 \
+  --include-constant AVCOL_SPC_UNSPECIFIED \
+  --include-constant AVCOL_SPC_BT470BG \
+  --include-constant AVCOL_SPC_SMPTE170M \
+  --include-constant AVCOL_SPC_SMPTE240M \
+  --include-constant AVCOL_SPC_BT2020_NCL \
   --include-constant AV_NOPTS_VALUE \
   --include-constant AV_TIME_BASE \
   --include-constant AVERROR_EOF \
