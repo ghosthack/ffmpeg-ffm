@@ -105,9 +105,15 @@ export PKG_CONFIG_PATH="$LIBJXL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 # any -lstdc++ the .pc files might advertise and link -lc++ explicitly.
 sed -i '' 's/-lstdc++//g' "$LIBJXL_PREFIX"/lib/pkgconfig/*.pc
 
+# --disable-autodetect: configure enables nothing just because the runner
+# happens to have it installed; the external libraries are exactly the ones
+# enabled here. zlib, bzlib (libavformat links /usr/lib/libbz2) and iconv were
+# previously autodetected. appkit/avfoundation/coreimage/metal/securetransport
+# drop out: they only serve avdevice, avfilter and TLS, all disabled.
 # --pkg-config-flags=--static: pull Libs.private so the static libjxl closure
 # (hwy, brotli) resolves while FFmpeg itself stays shared.
 CONFIGURE_FLAGS="--enable-shared --disable-static \
+  --disable-autodetect --enable-zlib --enable-bzlib --enable-iconv \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
   --disable-encoders --disable-muxers \
